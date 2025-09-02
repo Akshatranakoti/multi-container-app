@@ -6,8 +6,25 @@ services:
       - data:/data/db
     env_file:
       - ./env/mongo.env
+  backend:
+    build: ./backend
+    # build: 
+    #   context: ./backend
+    #   dockerfile: Dockerfile
+    #   args:
+    #     some_args: 1
+    ports:
+      -'3001:80'
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app
+      - /app//node_modules
+    env_file:
+      - ./env/node.env
+    depends_on:
+      - mongodb
   # frontend:
-  # backend:
 
 volumes:
   data:
+  logs:
